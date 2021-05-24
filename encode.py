@@ -1,17 +1,28 @@
+import time
+
 import pylab
 import imageio
 import skimage.transform
 
 HEIGHT = 64
 WIDTH = 128
-FPS = 30
+FPS = 25
 
-filename = 'bad_apple.mp4'
+filename = 'bad_apple_25.mp4'
 video = imageio.get_reader(filename, 'ffmpeg')
+
+print("loading video frames")
+video_frames = []
+for i in range(1_000_000):
+    try:
+        video_frames.append(video.get_data(i))
+    except IndexError:
+        break
+print(f"loaded {len(video_frames)} video frames")
 
 
 def get_frame(f):
-    frame = video.get_data(f)
+    frame = video_frames[f]
     frame = skimage.transform.resize(frame, (HEIGHT, WIDTH))
 
     # for y in range(HEIGHT):
@@ -56,7 +67,6 @@ def encode_video(frame_indices):
             data.append(255)
             data += frame
             last = frame
-            print(len(frame))
             continue
         changes_frame = []
 
@@ -87,6 +97,6 @@ def encode_video(frame_indices):
 
 
 if __name__ == '__main__':
-    result_bytes = bytearray(encode_video(range(0, 3 * 60 * FPS, 2)))
+    result_bytes = bytearray(encode_video(range(0, len(video_frames), 1)))
     with open(filename + ".bin", "wb") as f:
          f.write(result_bytes)

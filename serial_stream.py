@@ -4,7 +4,7 @@ import serial
 
 SERIAL_PORT = "com3"
 
-arduino_serial = serial.Serial(SERIAL_PORT, 57600 * 2)
+arduino_serial = serial.Serial(SERIAL_PORT, 150000)
 time.sleep(2)
 print("initialized serial")
 
@@ -42,11 +42,14 @@ def end_sending_data():
 
 def send_data(data):
     start_sending_data()
+    time_start = time.perf_counter()
     send_data_span(data)
+    time_end = time.perf_counter()
+    print("sent all data in", time_end - time_start)
     end_sending_data()
 
 
 if __name__ == '__main__':
     print("sending data")
-    with open("bad_apple.mp4.bin", "rb") as f:
+    with open("bad_apple_25.mp4.bin", "rb") as f:
         send_data(f.read())
