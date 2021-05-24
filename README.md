@@ -1,8 +1,12 @@
+
+
 # Bad Apple for Arduino
 
 Small project, used to play videos on Arduino Nano using 128x64 LED display on ST7920 controller, created mostly for playing Touhou - Bad Apple.
 
 ![](https://github.com/zheka2304/arduino-bad-apple/blob/master/img/photo.jpg?raw=true)
+
+https://user-images.githubusercontent.com/19735586/119399849-11ab4580-bce2-11eb-8e44-35d624005e40.mp4
 
 # Implementation
 
